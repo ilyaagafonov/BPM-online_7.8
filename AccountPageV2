@@ -1,34 +1,34 @@
-		methods: {
-				// Метод-обработчик нажатия кнопки.
-			onOpenPrimaryContactClick: function(scope, message, message2) {
-						message = "";
-						message2 = "";
-						// Создаем экземпляр класса Terrasoft.EntitySchemaQuery с корневой схемой [Contact].
-						var esq = Ext.create("Terrasoft.EntitySchemaQuery", {
-							rootSchemaName: "Invoice"
-						});
-						// Добавляем колонку с названием контрагента, который относится к данному контакту.
-						esq.addColumn("Account.Id", "AccountId");
-						//esq.AddColumn("PaymentStatusId", "PaymentStatusId");
-						esq.addColumn("Account.Name", "Name");
-						// Добавляем колонку с именем основного контакта контрагента, который относится к данному контакту.
-						esq.addColumn("PaymentAmount");
-						esq.addColumn("Amount");
-						// Получаем всю коллекцию записей и отображаем ее в информационном окне.
-						esq.getEntityCollection(function(result) {
-							if (!result.success) {
-								// обработка/логирование ошибки, например
-								this.showInformationDialog("Ошибка запроса данных");
-								return;
-							}
-							result.collection.each(function(item) {
-								message += " N: " + item.get("Name") +
-							" - P: " + item.get("PaymentAmount") +
-							" - A: " + item.get("Amount") + //"\n";
-							" - I: " + item.get("AccountId") +  "\n";
-							//" - S: " + item.get("PaymentStatusId") + "\n";
-							});
-							this.showInformationDialog(message);
-						}, this);
-					}
-		},
+methods: {
+// Метод-обработчик нажатия кнопки.
+onOpenPrimaryContactClick: function(scope, message, message2) {
+message = "";
+message2 = "";
+// Создаем экземпляр класса Terrasoft.EntitySchemaQuery с корневой схемой [Contact].
+var esq = Ext.create("Terrasoft.EntitySchemaQuery", {
+rootSchemaName: "Invoice"
+});
+// Добавляем колонку с названием контрагента, который относится к данному контакту.
+esq.addColumn("Account.Id", "AccountId");
+//esq.AddColumn("PaymentStatusId", "PaymentStatusId");
+esq.addColumn("Account.Name", "Name");
+// Добавляем колонку с именем основного контакта контрагента, который относится к данному контакту.
+esq.addColumn("PaymentAmount");
+esq.addColumn("Amount");
+// Получаем всю коллекцию записей и отображаем ее в информационном окне.
+esq.getEntityCollection(function(result) {
+if (!result.success) {
+// обработка/логирование ошибки, например
+this.showInformationDialog("Ошибка запроса данных");
+return;
+}
+result.collection.each(function(item) {
+message += " N: " + item.get("Name") +
+" - P: " + item.get("PaymentAmount") +
+" - A: " + item.get("Amount") + //"\n";
+" - I: " + item.get("AccountId") +  "\n";
+//" - S: " + item.get("PaymentStatusId") + "\n";
+});
+this.showInformationDialog(message);
+}, this);
+}
+},
